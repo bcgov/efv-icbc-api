@@ -9,7 +9,7 @@ import (
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello, OpenShift!!")
+	fmt.Fprintln(w, "Hello, OpenShift!")
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {

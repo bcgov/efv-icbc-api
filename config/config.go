@@ -39,8 +39,11 @@ func Load() Config {
 			}
 		}
 	} else {
-		// sensible defaults for local dev
-		allowed = []string{"http://localhost:8081", "http://localhost:8080"}
+		// sensible defaults for local dev + known dev route
+		allowed = []string{
+			"http://localhost:8080",
+			"https://efv-icbc-api-17db4f-dev.apps.silver.devops.gov.bc.ca",
+		}
 	}
 
 	allowCred := false
