@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8080
   - url: https://efv-icbc-api-17db4f-dev.apps.silver.devops.gov.bc.ca
-    description: Development OpenShift route
+    description: Development
 paths:
   /health:
     get:
