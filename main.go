@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/bcgov/go-sample-api/config"
+	"github.com/bcgov/efv-icbc-api/config"
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello, OpenShift!!!")
+	fmt.Fprintln(w, "Hello, OpenShift!!")
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {

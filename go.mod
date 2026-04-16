@@ -1,4 +1,4 @@
-module github.com/bcgov/go-sample-api
+module github.com/bcgov/efv-icbc-api
 
 go 1.20
 

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-sample-api
+  name: efv-icbc-api
   labels:
-    app: go-sample-api
+    app: efv-icbc-api
 spec:
   ports:
     - port: 80
       targetPort: 8080
       protocol: TCP
   selector:
-    app: go-sample-api
+    app: efv-icbc-api

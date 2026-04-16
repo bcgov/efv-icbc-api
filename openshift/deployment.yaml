@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-sample-api
+  name: efv-icbc-api
   labels:
-    app: go-sample-api
+    app: efv-icbc-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: go-sample-api
+      app: efv-icbc-api
   template:
     metadata:
       labels:
-        app: go-sample-api
+        app: efv-icbc-api
     spec:
       containers:
-        - name: go-sample-api
+        - name: efv-icbc-api
           image: REPLACE_WITH_IMAGE
           ports:
             - containerPort: 8080

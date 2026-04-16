@@ -1,4 +1,4 @@
-# go-sample-api
+# efv-icbc-api
 
 Simple Go "Hello, OpenShift" HTTP API and OpenShift manifests.
 
@@ -6,10 +6,10 @@ Build and push a Docker image (example using Docker):
 
 ```bash
 # build locally
-docker build -t <registry>/<namespace>/go-sample-api:latest .
+docker build -t <registry>/<namespace>/efv-icbc-api:latest .
 
 # push to registry
-docker push <registry>/<namespace>/go-sample-api:latest
+docker push <registry>/<namespace>/efv-icbc-api:latest
 ```
 
 Deploy to OpenShift (replace image if you pushed to registry):
@@ -23,7 +23,7 @@ oc apply -f openshift/service.yaml
 oc apply -f openshift/route.yaml
 
 # or use oc set image to update the placeholder image in the Deployment
-oc set image deployment/go-sample-api go-sample-api=<registry>/<namespace>/go-sample-api:latest
+oc set image deployment/efv-icbc-api efv-icbc-api=<registry>/<namespace>/efv-icbc-api:latest
 ```
 
 Quick notes:
