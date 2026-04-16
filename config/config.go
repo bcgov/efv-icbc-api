@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 	"time"
 )
 
@@ -14,6 +15,11 @@ type Config struct {
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 	IdleTimeout  time.Duration
+	// AllowedOrigins is a list of allowed CORS origins (comma-separated in ALLOWED_ORIGINS).
+	AllowedOrigins []string
+
+	// AllowCredentials controls whether Access-Control-Allow-Credentials is set.
+	AllowCredentials bool
 }
 
 // Load reads configuration from environment variables and returns a Config with sensible defaults.
@@ -23,12 +29,33 @@ func Load() Config {
 		port = "8080"
 	}
 
+	// parse allowed origins from env (comma-separated)
+	var allowed []string
+	if v := os.Getenv("ALLOWED_ORIGINS"); v != "" {
+		for _, s := range strings.Split(v, ",") {
+			s = strings.TrimSpace(s)
+			if s != "" {
+				allowed = append(allowed, s)
+			}
+		}
+	} else {
+		// sensible defaults for local dev
+		allowed = []string{"http://localhost:8081", "http://localhost:8080"}
+	}
+
+	allowCred := false
+	if os.Getenv("ALLOW_CREDENTIALS") == "true" {
+		allowCred = true
+	}
+
 	// Keep defaults consistent with previous main.go values
 	return Config{
-		Port:         port,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  120 * time.Second,
+		Port:             port,
+		ReadTimeout:      5 * time.Second,
+		WriteTimeout:     10 * time.Second,
+		IdleTimeout:      120 * time.Second,
+		AllowedOrigins:   allowed,
+		AllowCredentials: allowCred,
 	}
 }
 
