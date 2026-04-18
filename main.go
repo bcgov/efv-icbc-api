@@ -6,10 +6,11 @@ import (
 	"net/http"
 
 	"github.com/bcgov/efv-icbc-api/config"
+	"github.com/bcgov/efv-icbc-api/internal/handlers"
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello, OpenShift!")
+	fmt.Fprintln(w, "Hello, OpenShift!!")
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -23,6 +24,8 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", helloHandler)
 	mux.HandleFunc("/health", healthHandler)
+	// register mock API endpoints from internal handlers
+	handlers.RegisterRoutes(mux)
 	mux.HandleFunc("/openapi.yaml", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "docs/openapi.yaml")
 	})

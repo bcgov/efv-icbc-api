@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   title: EFV ICBC API
-  version: "0.1.3"
+  version: "0.1.7"
   description: EFV ICBC API
 servers:
   - url: http://localhost:8080
@@ -23,3 +23,235 @@ paths:
                   status:
                     type: string
                     example: ok
+  /api/v1/driver/validate:
+    get:
+      summary: Validate driver license status and information
+      tags: [Driver]
+      parameters:
+        - name: license_number
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: province
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BC
+      responses:
+        '200':
+          description: Driver license validation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverValidationResponse'
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverValidationResponse'
+        '404':
+          description: Driver license not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverValidationResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverValidationResponse'
+  /api/v1/insurance/status:
+    get:
+      summary: Get vehicle insurance status and coverage information
+      tags: [Insurance]
+      parameters:
+        - name: vin
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: policy_number
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Insurance status check successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceStatusResponse'
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceStatusResponse'
+        '404':
+          description: Insurance policy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceStatusResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceStatusResponse'
+  /api/v1/vehicle/verify:
+    get:
+      summary: Verify vehicle registration and insurance status
+      tags: [Vehicle]
+      parameters:
+        - name: vin
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: plate
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: province
+          in: query
+          required: false
+          schema:
+            type: string
+            default: BC
+      responses:
+        '200':
+          description: Vehicle verification successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleVerificationResponse'
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleVerificationResponse'
+        '404':
+          description: Vehicle not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleVerificationResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleVerificationResponse'
+components:
+  schemas:
+    DriverInfo:
+      type: object
+      properties:
+        class:
+          type: string
+        expiry_date:
+          type: string
+        is_provisional:
+          type: boolean
+        is_suspended:
+          type: boolean
+        issue_date:
+          type: string
+        license_number:
+          type: string
+        province:
+          type: string
+        restrictions:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    DriverValidationResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DriverInfo'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+        success:
+          type: boolean
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        details:
+          type: string
+        message:
+          type: string
+    InsuranceInfo:
+      type: object
+      properties:
+        cancellation_date:
+          type: string
+        coverage_type:
+          type: string
+        effective_date:
+          type: string
+        expiry_date:
+          type: string
+        is_cancelled:
+          type: boolean
+        policy_number:
+          type: string
+        status:
+          type: string
+        vin:
+          type: string
+    InsuranceStatusResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/InsuranceInfo'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+        success:
+          type: boolean
+    VehicleInfo:
+      type: object
+      properties:
+        insurance_expiry:
+          type: string
+        insurance_status:
+          type: string
+        is_commercial:
+          type: boolean
+        make:
+          type: string
+        model:
+          type: string
+        plate_number:
+          type: string
+        province:
+          type: string
+        registration_expiry:
+          type: string
+        registration_status:
+          type: string
+        vin:
+          type: string
+        year:
+          type: integer
+    VehicleVerificationResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VehicleInfo'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+        success:
+          type: boolean
