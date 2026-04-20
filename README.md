@@ -1,6 +1,6 @@
 # EFV-ICBC API
 
-A high-performance Go HTTP API for Electric Vehicle (EV) integration with the Insurance Corporation of British Columbia (ICBC). This service enables vehicle verification, driver validation, and insurance status checking with production-ready OpenShift deployment support.
+A high-performance Go HTTP API for EFV integration with the Insurance Corporation of British Columbia (ICBC). This service enables vehicle verification, driver validation, and insurance status checking with production-ready OpenShift deployment support.
 
 **Version**: 0.1.7 | **Go**: 1.20+ | **Status**: Active Development
 
